@@ -11,7 +11,7 @@ import axios from 'axios'
 export class PeliculaService extends BaseService {
   constructor(
     @Inject(PeliculaRepository)
-    private claveApiRepositorio: PeliculaRepository,
+    private peliculaRepositorio: PeliculaRepository,
   ) {
     super(PeliculaService.name)
   }
@@ -95,19 +95,19 @@ export class PeliculaService extends BaseService {
   //       Messages.ERROR_SUSCRIPCIONES_ACTIVAS_CUOTAS
   //     )
   //   }
-  //   return await this.claveApiRepositorio.crear(claveDto, usuarioAuditoria)
+  //   return await this.peliculaRepositorio.crear(claveDto, usuarioAuditoria)
   // }
 
   async listarTodos(paginacionQueryDto: PaginacionQueryDto) {
-    return await this.claveApiRepositorio.listarTodos(paginacionQueryDto)
+    return await this.peliculaRepositorio.listarTodos(paginacionQueryDto)
   }
 
   async activar(idParametro: string, usuarioAuditoria: string) {
-    const clave = await this.claveApiRepositorio.buscarPorId(idParametro)
+    const clave = await this.peliculaRepositorio.buscarPorId(idParametro)
     if (!clave) {
       throw new PreconditionFailedException(Messages.EXCEPTION_DEFAULT)
     }
-    await this.claveApiRepositorio.actualizar(
+    await this.peliculaRepositorio.actualizar(
       idParametro,
       { estado: Status.ACTIVE },
       usuarioAuditoria
@@ -119,11 +119,11 @@ export class PeliculaService extends BaseService {
   }
 
   async inactivar(idParametro: string, usuarioAuditoria: string) {
-    const clave = await this.claveApiRepositorio.buscarPorId(idParametro)
+    const clave = await this.peliculaRepositorio.buscarPorId(idParametro)
     if (!clave) {
       throw new PreconditionFailedException(Messages.EXCEPTION_DEFAULT)
     }
-    await this.claveApiRepositorio.actualizar(
+    await this.peliculaRepositorio.actualizar(
       idParametro,
       { estado: Status.INACTIVE },
       usuarioAuditoria
@@ -135,11 +135,11 @@ export class PeliculaService extends BaseService {
   }
 
   async eliminar(idClave: string, usuarioAuditoria: string) {
-    const parametro = await this.claveApiRepositorio.buscarPorId(idClave)
+    const parametro = await this.peliculaRepositorio.buscarPorId(idClave)
     if (!parametro) {
       throw new PreconditionFailedException(Messages.EXCEPTION_DEFAULT)
     }
-    await this.claveApiRepositorio.actualizar(
+    await this.peliculaRepositorio.actualizar(
       idClave,
       { estado: Status.ELIMINATE },
       usuarioAuditoria

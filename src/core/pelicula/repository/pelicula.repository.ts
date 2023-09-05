@@ -29,26 +29,25 @@ export class PeliculaRepository {
     const { limite, saltar, filtro } = paginacionQueryDto
     const query = await this.dataSource
       .getRepository(Pelicula)
-      .createQueryBuilder('claveApi')
+      .createQueryBuilder('pelicula')
       .select([
-        'claveApi.id',
-        'claveApi.estado',
-        'claveApi.fechaGeneracion',
-        'claveApi.fechaCaducidad',
-        'claveApi.etiqueta',
-        'claveApi.clave',
+        'pelicula.id',
+        'pelicula.estado',
+        'pelicula.fechaGeneracion',
+        'pelicula.poster',
+        'pelicula.title',
       ])
       .take(limite)
       .skip(saltar)
 
-    if (filtro) {
-      query.andWhere(
-        '(claveApi.etiqueta ilike :filtro or claveApi.estado ilike :filtro)',
-        {
-          filtro: `%${filtro}%`,
-        }
-      )
-    }
+    // if (filtro) {
+    //   query.andWhere(
+    //     '(claveApi.etiqueta ilike :filtro or claveApi.estado ilike :filtro)',
+    //     {
+    //       filtro: `%${filtro}%`,
+    //     }
+    //   )
+    // }
     return await query.getManyAndCount()
   }
 

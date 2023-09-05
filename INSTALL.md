@@ -1,4 +1,4 @@
-# Proyecto Base Backend - Manual de instalación para entornos de desarrollo
+# Peliculas - Manual de instalación - Backend
 
 ## 1. Requerimientos
 

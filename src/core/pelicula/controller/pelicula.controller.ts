@@ -46,15 +46,16 @@ export class PeliculaController extends BaseController {
     super(PeliculaController.name)
   }
 
-  //fixme: Datos sensibles no  deberian ser accedidos
-  @ApiExcludeEndpoint()
-  @ApiOperation({ summary: 'Obtener todas las api-clave' })
+  // @ApiExcludeEndpoint()
+  // @ApiOperation({ summary: 'Obtener todas las api-clave' })
+  @UseGuards(JwtAuthGuard, CasbinGuard)
   @ApiResponse({
     status: StatusValorEnum.STATUS_200,
     description: StatusDescripcionEnum.RETORNA_LISTA_REGISTRO,
   })
   @Get('todos')
   async listarTodos(@Query() paginacionQueryDto: PaginacionQueryDto) {
+    console.log('--log--LISTAR TODOS === ', paginacionQueryDto)
     const result = await this.peliculaService.listarTodos(paginacionQueryDto)
     return this.successListRows(result)
   }
