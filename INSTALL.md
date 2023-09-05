@@ -15,13 +15,13 @@
 
 ```bash
 # Clonación del proyecto
-git clone git@gitlab.agetic.gob.bo:agetic/agetic/proyectos-base/agetic-nestjs-base-backend.git
+git clone https://github.com/fhuayta/peliculas-backend.git
 
 # Ingresamos dentro de la carpeta del proyecto
-cd agetic-nestjs-base-backend
+cd peliculas-backend
 
 # Cambiamos a la rama develop
-git checkout develop
+git checkout main
 
 # Instalamos dependencias
 npm install

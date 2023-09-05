@@ -65,10 +65,10 @@ export class modulo1611497480901 implements MigrationInterface {
           {
             nombre: 'parametros',
             url: '/admin/parametros',
-            label: 'Parámetros',
+            label: 'Mis Películas',
             propiedades: {
               icono: 'tune',
-              descripcion: 'Parámetros generales del sistema',
+              descripcion: 'Mis películas',
               orden: 2,
             },
           },
