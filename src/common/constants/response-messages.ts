@@ -44,4 +44,6 @@ export enum Messages {
 
   // Parámetros
   REPEATED_PARAMETER = 'Parámetro repetido',
+
+  ERROR_CREAR = 'Error al crear registro',
 }

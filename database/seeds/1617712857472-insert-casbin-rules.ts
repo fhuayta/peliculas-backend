@@ -145,6 +145,9 @@ export class insertCasbinRules1617712857472 implements MigrationInterface {
       '/api/pelicula/todos': {
         [RolEnum.TODOS]: 'GET',
       },
+      '/api/pelicula': {
+        [RolEnum.TODOS]: 'POST',
+      },
     }
 
     const registrarCasbin = async (

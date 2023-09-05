@@ -1,7 +1,7 @@
 import { TextService } from '../../../common/lib/text.service'
 import { DataSource, EntityManager } from 'typeorm'
 import { Injectable } from '@nestjs/common'
-import { CrearClaveApiDto } from '../dto/crear-pelicula.dto'
+import { CrearPeliculaDto } from '../dto/crear-pelicula.dto'
 import { Pelicula } from '../entity/pelicula.entity'
 import { PaginacionQueryDto } from 'src/common/dto/paginacion-query.dto'
 import { EstadoClaveApiEnum } from '../enum/estado-clave-api.enum'
@@ -13,16 +13,21 @@ import { Usuario } from 'src/core/usuario/entity/usuario.entity'
 export class PeliculaRepository {
   constructor(private dataSource: DataSource) {}
 
-  async crear(claveApiDto: CrearClaveApiDto, usuarioAuditoria: string) {
+  async crear(claveApiDto: CrearPeliculaDto, usuarioAuditoria: string) {
     const nuevoUsuario = new Usuario()
     nuevoUsuario.id = claveApiDto.usuario
 
-    const claveApi = new Pelicula()
-    claveApi.fechaGeneracion = new Date()
-    claveApi.usuario = nuevoUsuario
-    claveApi.usuarioCreacion = usuarioAuditoria
+    const pelicula = new Pelicula()
+    pelicula.fechaGeneracion = new Date()
+    pelicula.usuario = nuevoUsuario
+    pelicula.usuarioCreacion = usuarioAuditoria
+    pelicula.poster = claveApiDto.poster
+    pelicula.title = claveApiDto.title
+    pelicula.year = claveApiDto.year
+    pelicula.director = claveApiDto.director
+    pelicula.actors = claveApiDto.actors
 
-    return await this.dataSource.getRepository(Pelicula).save(claveApi)
+    return await this.dataSource.getRepository(Pelicula).save(pelicula)
   }
 
   async listarTodos(paginacionQueryDto: PaginacionQueryDto) {
@@ -36,6 +41,9 @@ export class PeliculaRepository {
         'pelicula.fechaGeneracion',
         'pelicula.poster',
         'pelicula.title',
+        'pelicula.year',
+        'pelicula.director',
+        'pelicula.actors',
       ])
       .take(limite)
       .skip(saltar)

@@ -3,7 +3,7 @@ import { BaseService } from 'src/common/base/base-service'
 import { Status } from 'src/common/constants'
 import { Messages } from 'src/common/constants/response-messages'
 import { PaginacionQueryDto } from 'src/common/dto/paginacion-query.dto'
-import { CrearClaveApiDto } from '../dto/crear-pelicula.dto'
+import { CrearPeliculaDto } from '../dto/crear-pelicula.dto'
 import { PeliculaRepository } from '../repository/pelicula.repository'
 import axios from 'axios'
 
@@ -75,28 +75,37 @@ export class PeliculaService extends BaseService {
     }
   }
 
-  // async crear(claveDto: CrearClaveApiDto, usuarioAuditoria: string) {
-  //   const suscripcion = await this.suscripcionService.validarCuotaDisponible(
-  //     usuarioAuditoria
-  //   )
-  //   if (suscripcion.cantidadCorreo === null) {
-  //     throw new PreconditionFailedException(
-  //       Messages.ERROR_SUSCRIPCIONES_ACTIVAS
-  //     )
-  //   }
+  async crear(claveDto: CrearPeliculaDto, usuarioAuditoria: string) {
+    // const suscripcion = await this.suscripcionService.validarCuotaDisponible(
+    //   usuarioAuditoria
+    // )
+    // if (suscripcion.cantidadCorreo === null) {
+    //   throw new PreconditionFailedException(
+    //     Messages.ERROR_SUSCRIPCIONES_ACTIVAS
+    //   )
+    // }
 
-  //   console.log('clave*******' + JSON.stringify(suscripcion))
-  //   const totalC = suscripcion.cantidadCorreo - suscripcion.cantidadCorreoUsado
-  //   const totalS = suscripcion.cantidadSms - suscripcion.cantidadSmsUsado
-  //   const totalW =
-  //     suscripcion.cantidadWhatsapp - suscripcion.cantidadWhatsappUsado
-  //   if (totalC <= 0 && totalS <= 0 && totalW <= 0) {
-  //     throw new PreconditionFailedException(
-  //       Messages.ERROR_SUSCRIPCIONES_ACTIVAS_CUOTAS
-  //     )
-  //   }
-  //   return await this.peliculaRepositorio.crear(claveDto, usuarioAuditoria)
-  // }
+    // console.log('clave*******' + JSON.stringify(suscripcion))
+    // const totalC = suscripcion.cantidadCorreo - suscripcion.cantidadCorreoUsado
+    // const totalS = suscripcion.cantidadSms - suscripcion.cantidadSmsUsado
+    // const totalW =
+    //   suscripcion.cantidadWhatsapp - suscripcion.cantidadWhatsappUsado
+    // if (totalC <= 0 && totalS <= 0 && totalW <= 0) {
+    //   throw new PreconditionFailedException(
+    //     Messages.ERROR_SUSCRIPCIONES_ACTIVAS_CUOTAS
+    //   )
+    // }
+    // return await this.peliculaRepositorio.crear(claveDto, usuarioAuditoria)
+
+    const resultado = await this.peliculaRepositorio.crear(
+      claveDto,
+      usuarioAuditoria
+    )
+    if (!resultado) {
+      throw new PreconditionFailedException(Messages.ERROR_CREAR)
+    }
+    return resultado
+  }
 
   async listarTodos(paginacionQueryDto: PaginacionQueryDto) {
     return await this.peliculaRepositorio.listarTodos(paginacionQueryDto)

@@ -28,6 +28,7 @@ import {
 } from 'src/common/enum/status-valor'
 import { PeliculaQueryDto } from 'src/common/dto/pelicula-query.dto'
 import { PeliculaDetalleQueryDto } from 'src/common/dto/pelicula-detalle-query.dto copy'
+import { CrearPeliculaDto } from '../dto/crear-pelicula.dto'
 
 @ApiTags('pelicula')
 // @ApiBearerAuth('defaultBearerAuth')
@@ -80,6 +81,19 @@ export class PeliculaController extends BaseController {
     console.log('--log--OBJETO: ', pelis)
     return this.successListRowsIterable(pelis)
     // return pelis
+  }
+
+  @UseGuards(JwtAuthGuard, CasbinGuard)
+  @ApiOperation({ summary: 'Crear pelicula' })
+  @ApiResponse({
+    status: StatusValorEnum.STATUS_201,
+    description: StatusDescripcionEnum.CREAR_EXITO,
+  })
+  @Post()
+  async crear(@Req() req, @Body() rolDto: CrearPeliculaDto) {
+    const usuarioAuditoria = this.getUser(req)
+    const result = await this.peliculaService.crear(rolDto, usuarioAuditoria)
+    return this.successCreate(result)
   }
 
   @ApiOperation({ summary: 'Api pública detalles' })
